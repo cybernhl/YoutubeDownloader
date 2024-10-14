@@ -1,3 +1,6 @@
+plugins {
+    id 'kotlin-android'
+}
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
 
@@ -6,8 +9,12 @@ localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "30.0.3"
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
     defaultConfig {
+        namespace "com.marwaeltayeb.youtubedownloader"
         applicationId "com.marwaeltayeb.youtubedownloader"
         minSdkVersion 19
         targetSdkVersion 33
@@ -28,14 +35,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     def paging_version = "2.1.0"
     def view_model_version = "2.1.0"
     def support_version = "1.2.0"
@@ -44,16 +53,10 @@ dependencies {
     def youtube_extractor_version = "2.1.0"
     def rxAndroid = "2.1.1"
     def youtube_player_version = "10.0.5"
-    def nav_version = "2.3.5"
+
 
     implementation "androidx.appcompat:appcompat:$support_version"
-    // YouTubeExtractor
-    implementation "com.github.HaarigerHarald:android-youtubeExtractor:$youtube_extractor_version"
-    //  RxAndroid
-    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
-    // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:$view_model_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$view_model_version"
@@ -62,11 +65,23 @@ dependencies {
     // RecyclerView and CardView
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // YouTubeExtractor
+    implementation "com.github.HaarigerHarald:android-youtubeExtractor:$youtube_extractor_version"
+    //  RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtube_player_version"
-    // Navigation Component
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
